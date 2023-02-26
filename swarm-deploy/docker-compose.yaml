@@ -1,0 +1,30 @@
+version: '3.7'
+services: 
+
+  db: 
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      -db_data:/var/lib/postgres/data
+  web: 
+    image: phisit11/django-web:0226
+    volumes:
+      - static_data/urs/src/app/static
+    ports: 
+      - '8000:8000'
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      update_config:
+        delay: 5s
+
+volumes:
+      - static_data:
+      - db_data:
+networks:
+   defauit:
+    driver: overlay
+    attachable: true
