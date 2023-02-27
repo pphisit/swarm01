@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+
+  redis:
+    image: redislabs/redismod
+    networks:
+      - backend
+  web1:
+    image: phisit11/nginx-nodejs-redis-web1:0227
+    hostname: web1
+    networks:
+      - backend
+  web2:
+    image: phisit11/nginx-nodejs-redis-web2:0227
+    hostname: web2
+    networks:
+      - backend
+  nginx:
+    image: phisit11/nginx:0227
+    depends_on:
+    - web1
+    - web2
+    networks:
+      - backend
+      - webproxy
+    deploy:
+        replicas: 1
+        labels:
+          - traefik.docker.network=webproxy
+          - traefik.enable=true
+          - traefik.constraint-label=webproxy
+          - traefik.http.routers.spcn29swarm01-https.entrypoints=websecure
+          - traefik.http.routers.spcn29swarm01-https.rule=Host("spcn29swarm01.xops.ipv9.me")
+          - traefik.http.routers.spcn29swarm01-https.tls.certresolver=default
+          - traefik.http.services.spcn29swarm01.loadbalancer.server.port=84
+          - traefik.http.routers.spcn29swarm01-https.tls=true
+        resources:
+          reservations:
+            cpus: '0.1'
+            memory: 10M
+          limits:
+            cpus: '0.4'
+            memory: 250M
+
+networks:
+  webproxy:
+    external: true
+  backend:
+    driver: overlay
