@@ -1,9 +1,9 @@
-version: '3.7'
+version: '3'
 
 services:
 
   redis:
-    image: redislabs/redismod
+    image: 'redislabs/redismod'
     networks:
       - backend
   web1:
@@ -32,16 +32,16 @@ services:
           - traefik.constraint-label=webproxy
           - traefik.http.routers.spcn29swarm01-https.entrypoints=websecure
           - traefik.http.routers.spcn29swarm01-https.rule=Host("spcn29swarm01.xops.ipv9.me")
-          - traefik.http.routers.spcn29swarm01-https.tls.certresolver=default
-          - traefik.http.services.spcn29swarm01.loadbalancer.server.port=84
+          - traefik.http.routers.spcn29swarm01-https.tls.certresolver=backend
+          - traefik.http.services.spcn29swarm01.loadbalancer.server.port=80
           - traefik.http.routers.spcn29swarm01-https.tls=true
         resources:
-          reservations:
-            cpus: '0.1'
-            memory: 10M
-          limits:
-            cpus: '0.4'
-            memory: 250M
+            reservations:
+              cpus: '0.1'
+              memory: 10M
+            limits:
+              cpus: '0.4'
+              memory: 250M   
 
 networks:
   webproxy:
