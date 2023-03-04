@@ -31,8 +31,8 @@
 1. ติดตั้ง Docker, wakatime และ ssh remote ผ่าน VS Code
 2. เชื่อมต่อ Remote ssh 
     * กดปุ่นสีเขียวด้านซ้ายล่าง
+![images](https://user-images.githubusercontent.com/109591322/222915170-eea6290c-3494-4998-a50e-504b6d00b3ca.png)
 
-ใส่รูป 
     กด Connect to Host > Configure SSH Hosts > /Users/p/.ssh/config > ใส่คำสั่งด้านล่าง
 
     
@@ -40,7 +40,7 @@
         HostName    // ip address
         User        // ชื่อ hostname จากเครื่องที่จะเชื่อม
     
-
+    ![images](https://user-images.githubusercontent.com/109591322/222915172-0b26924e-d083-4126-80e5-6cec87b32832.png)
 4. ติดตั้ง Docker, wakatime ที่เครื่อง SSH ที่เชื่อมต่อ 
 
 5. ติดตั้ง docker engine 
@@ -128,4 +128,70 @@
     docker push phisit11/nginx-nodejs-redis-web2:0227
     docker push phisit11/nginx:0227
     ```
+### เพิ่ม stacks บน portainer
+1. เปิด https://portainer.ipv9.me
+2. กด Stacks > add stacks 
+3. ใส่ code ลงในส่วนของ Web editor บน portainer
+* อยู่ในไฟล์ compose-revp
+    ```
+    version: '3'
 
+    services:
+
+    redis:
+        image: 'redislabs/redismod'
+        networks:
+        - backend
+    web1:
+        image: phisit11/nginx-nodejs-redis-web1:0227
+        hostname: web1
+        networks:
+        - backend
+    web2:
+        image: phisit11/nginx-nodejs-redis-web2:0227
+        hostname: web2
+        networks:
+        - backend
+    nginx:
+        image: phisit11/nginx:0227
+        depends_on:
+        - web1
+        - web2
+        networks:
+        - backend
+        - webproxy
+        deploy:
+            replicas: 1
+            labels:
+            - traefik.docker.network=webproxy
+            - traefik.enable=true
+            - traefik.constraint-label=webproxy
+            - traefik.http.routers.${APPNAME}-https.entrypoints=websecure
+            - traefik.http.routers.${APPNAME}-https.rule=Host("${APPNAME}.xops.ipv9.me")
+            - traefik.http.routers.${APPNAME}-https.tls.certresolver=default
+            - traefik.http.routers.${APPNAME}-https.tls=true
+            - traefik.http.services.${APPNAME}.loadbalancer.server.port=80
+            
+            resources:
+                reservations:
+                cpus: '0.1'
+                memory: 10M
+                limits:
+                cpus: '0.4'
+                memory: 250M   
+
+    networks:
+    webproxy:
+        external: true
+    backend:
+        driver: overlay
+    ```
+
+4. Add an environment variables
+    * Environment variables > Add an environment variables
+    * name APPNAME value spcns29warm01
+5. ทดสอบการใช้งาน 
+    * ไปที่ https://spcn29swarm01.xops.ipv9.me/  
+    ถ้าสามารถใช้งานได้จะขึ้นหน้าตาดังรูปด้านล่าง
+
+![](https://user-images.githubusercontent.com/109591322/222915178-92090cab-c17c-48d9-8899-cbaa3ec5b2e6.png)
