@@ -6,6 +6,8 @@
 ### url
 * https://spcn29swarm01.xops.ipv9.me/
 
+### wakatime project
+* https://wakatime.com/@spcn29/projects/zcihtacbcp
 ### ขั้นตอนการติดตั้งใน VM
 1. สร้าง VM โดยมี spec ดังนี้
     * CPU 2 cores
@@ -21,7 +23,27 @@
     ```
     timedatectl set-timezone Asia/Bangkok
     ```
-3. ติดตั้ง docker engine 
+3. ตรวจสอบ IP address ของ VM เพื่อ Remote ssh
+    ```
+    ip a
+    ```
+### เชื่อมต่อ Remote ssh ผ่าน VS Code และติดตั้ง docker engine 
+1. ติดตั้ง Docker, wakatime และ ssh remote ผ่าน VS Code
+2. เชื่อมต่อ Remote ssh 
+    * กดปุ่นสีเขียวด้านซ้ายล่าง
+
+ใส่รูป 
+    กด Connect to Host > Configure SSH Hosts > /Users/p/.ssh/config > ใส่คำสั่งด้านล่าง
+
+    
+        Host        // ชื่อ Host ที่ต้องการตั้ง
+        HostName    // ip address
+        User        // ชื่อ hostname จากเครื่องที่จะเชื่อม
+    
+
+4. ติดตั้ง Docker, wakatime ที่เครื่อง SSH ที่เชื่อมต่อ 
+
+5. ติดตั้ง docker engine 
     ```
     apt update; apt upgrade -y #อัปเดตแพ็คเกจภายในเครื่อง
 
@@ -55,6 +77,8 @@
     ln -s /etc/machine-id /var/lib/dbus/machine-id
     init 0
     ```
+
+
 ### เตรียม stack swarm  
 1. สร้าง Token 
     เพื่อนำไปใส่ที่ Node ที่ต้องการให้เชื่อมต่อ
@@ -70,7 +94,7 @@
     ```
     docker node ls
     ```
-### ติดตั้ง Portainer CE Docker swarm
+### deploy portainer for swarm 
 1.  ดาวน์โหลดและติดตั้ง
     ```
     curl -L https://downloads.portainer.io/ce2-17/portainer-agent-stack.yml -o portainer-agent-stack.yml
@@ -78,5 +102,30 @@
     ```
     docker stack deploy -c portainer-agent-stack.yml portainer
     ```
+### clone แอพ จาก github    
+* nginx-nodejs-redis
+1. compose Up ไฟล์ compose.yaml
+2. docker login
+    ```
+    docker login 
+    ```
+    ใส่ Username , password ของ dockerhub
 
+3. เพิ่ม tag 
+    ``` 
+    docker images
+    ```
+    ``` 
+    docker tag nginx-nodejs-redis-web1:latest phisit11/nginx-nodejs-redis-web1:0227
+
+    docker tag nginx-nodejs-redis-web2:latest phisit11/nginx-nodejs-redis-web2:0227
+
+    docker tag nginx-nodejs-redis-nginx:latest phisit11/nginx:0227
+    ```
+4. push Image to DockerHub
+    ``` 
+    docker push phisit11/nginx-nodejs-redis-web1:0227
+    docker push phisit11/nginx-nodejs-redis-web2:0227
+    docker push phisit11/nginx:0227
+    ```
 
