@@ -8,6 +8,14 @@
 
 ### wakatime project
 * https://wakatime.com/@spcn29/projects/zcihtacbcp
+---
+* [ขั้นตอนการติดตั้งใน VM](https://github.com/pphisit/swarm01#%E0%B8%82%E0%B8%B1%E0%B9%89%E0%B8%99%E0%B8%95%E0%B8%AD%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B9%83%E0%B8%99-vm)
+
+* [เชื่อมต่อ Remote ssh ผ่าน VS Code และติดตั้ง docker engine](https://github.com/pphisit/swarm01#%E0%B9%80%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%A1%E0%B8%95%E0%B9%88%E0%B8%AD-remote-ssh-%E0%B8%9C%E0%B9%88%E0%B8%B2%E0%B8%99-vs-code-%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87-docker-engine)
+* [เตรียม stack swarm](https://github.com/pphisit/swarm01#%E0%B9%80%E0%B8%95%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A1-stack-swarm)
+* [deploy portainer for swarm ](https://github.com/pphisit/swarm01#%E0%B9%80%E0%B8%95%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A1-stack-swarm)
+* [clone แอพ จาก github](https://github.com/pphisit/swarm01#%E0%B9%80%E0%B8%95%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A1-stack-swarm)
+* [เพิ่ม stacks บน portainer](https://github.com/pphisit/swarm01#%E0%B9%80%E0%B8%95%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%A1-stack-swarm)
 ### ขั้นตอนการติดตั้งใน VM
 1. สร้าง VM โดยมี spec ดังนี้
     * CPU 2 cores
