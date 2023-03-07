@@ -197,7 +197,8 @@
 
 4. Add an environment variables
     * Environment variables > Add an environment variables
-    * name APPNAME value spcns29warm01
+    * name : APPNAME 
+    * value : spcns29swarm01
 5. ทดสอบการใช้งาน 
     * ไปที่ https://spcn29swarm01.xops.ipv9.me/  
     ถ้าสามารถใช้งานได้จะขึ้นหน้าตาดังรูปด้านล่าง
